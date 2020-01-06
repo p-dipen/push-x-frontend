@@ -1,0 +1,51 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 ml-auto mr-auto">
+        <form name="signinform" ng-submit="OnSubmit(signinform)" ng-validate="signInValidat">
+          <div class="card">
+            <div class="card-header card-header-rose card-header-icon text-center">
+              <div class="logo">
+                <img src="../../images/SmallLogo_1_.jpg" class="logo-insider">
+              </div>
+              <h4 class="card-title">Login Form</h4>
+            </div>
+            <div class="card-body">
+              <div class="form-group bmd-form-group" ng-class="userdetail.email != '' ? 'is-focused' : ''">
+                <label for="exampleEmail" class="bmd-label-floating">
+                  Email Address
+                </label>
+                <input type="email" class="form-control" id="exampleEmail" name="email" aria-required="true"
+                  ng-model="userdetail.email" />
+              </div>
+              <div class="form-group bmd-form-group" ng-class="userdetail.password != '' ? 'is-focused' : ''">
+                <label for="password" class="bmd-label-floating">
+                  Password</label>
+                <input type="password" class="form-control" id="password" name="password" aria-required="true"
+                  ng-model="userdetail.password" minlength="6" />
+              </div>
+            </div>
+            <div class="row card-footer" ng-if="error">
+              <div class="col-md-12">
+                <div class="alert alert-danger">
+                  <span>{{errormsg}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer justify-content-center">
+              <button type="submit" class="btn btn-primary btn-round">
+                Login
+              </button>
+            </div>
+            <div class="row ml-auto mr-auto text-center">
+              <p class="col-md-12">
+                <a ui-sref="signup">Sign Up</a>
+              </p>
+            </div>
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>

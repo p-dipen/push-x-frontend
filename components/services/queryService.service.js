@@ -1,8 +1,5 @@
-;(function() {
-
-
-  'use strict';
-
+(function() {
+  "use strict";
 
   /**
    * $http service abstraction to make API calls with any HTTP method,
@@ -32,34 +29,22 @@
    *
    */
 
-
   angular
-    .module('boilerplate')
-    .factory('QueryService', [
-      '$http', '$q', 'CONSTANTS', QueryService
-    ]);
-
-
+    .module("boilerplate")
+    .factory("QueryService", ["$http", "$q", "CONSTANTS", QueryService]);
 
   //////////////// factory
 
-
-
   function QueryService($http, $q, CONSTANTS) {
-
-
     var service = {
       query: query
     };
 
     return service;
 
-
     //////////////// definition
 
-
     function query(method, url, params, data) {
-
       var deferred = $q.defer();
 
       $http({
@@ -67,19 +52,22 @@
         url: CONSTANTS.API_URL + url,
         params: params,
         data: data
-      }).then(function(data) {
-        if (!data.config) {
-          console.log('Server error occured.');
+      }).then(
+        function(data) {
+          if (!data.config) {
+            console.log("Server error occured.");
+          }
+          deferred.resolve(data);
+        },
+        function(error) {
+          if (error.staus == 400) {
+            deferred.resolve(error);
+          }
+          deferred.reject(error);
         }
-        deferred.resolve(data);
-      }, function(error) {
-        deferred.reject(error);
-      });
+      );
 
       return deferred.promise;
     }
-
   }
-
-
 })();

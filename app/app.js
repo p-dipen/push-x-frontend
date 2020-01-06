@@ -1,92 +1,90 @@
-/**
- * 
- * AngularJS Boilerplate
- * @description           Description
- * @author                Jozef Butko // www.jozefbutko.com/resume
- * @url                   www.jozefbutko.com
- * @version               1.1.7
- * @date                  March 2015
- * @license               MIT
- * 
- */
-;(function() {
-
-
+(function () {
   /**
    * Definition of the main app module and its dependencies
    */
-  angular
-    .module('boilerplate', [
-      'ngRoute'
-    ])
-    .config(config);
+  angular.module("boilerplate", ["ui.router", "ngValidate"]).config(config);
 
   // safe dependency injection
   // this prevents minification issues
-  config.$inject = ['$routeProvider', '$locationProvider', '$httpProvider', '$compileProvider'];
+  config.$inject = [
+    "$stateProvider", "$urlRouterProvider",
+    "$locationProvider",
+    "$httpProvider",
+    "$compileProvider"
+  ];
 
   /**
    * App routing
    *
    * You can leave it here in the config section or take it out
    * into separate file
-   * 
+   *
    */
-  function config($routeProvider, $locationProvider, $httpProvider, $compileProvider) {
-
+  function config(
+    $stateProvider, $urlRouterProvider,
+    $locationProvider,
+    $httpProvider,
+    $compileProvider
+  ) {
     $locationProvider.html5Mode(false);
-
+    $urlRouterProvider.otherwise('/');
     // routes
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/home.html',
-        controller: 'MainController',
-        controllerAs: 'main'
+    $stateProvider
+      .state("base", {
+        url: "/",
+        templateUrl: "views/signup/login.html",
+        controller: "SignInController",
+        controllerAs: "signin"
       })
-      .when('/contact', {
-        templateUrl: 'views/contact.html',
-        controller: 'MainController',
-        controllerAs: 'main'
+      .state("login", {
+        url: "/login",
+        templateUrl: "views/signup/login.html",
+        controller: "SignInController",
+        controllerAs: "signin"
       })
-      .when('/setup', {
-        templateUrl: 'views/setup.html',
-        controller: 'MainController',
-        controllerAs: 'main'
+      .state("activate", {
+        url: "/activate/:activateCode",
+        templateUrl: "views/signup/activate.html",
+        controller: "ActivateController",
+        controllerAs: "activate"
       })
-      .otherwise({
-        redirectTo: '/'
-      });
+      .state("signup", {
+        url: "/signup",
+        templateUrl: "views/signup/signup.html",
+        controller: "SignController",
+        controllerAs: "sign"
+      })
+      .state("dashboard", {
+        url: "/dashboard",
+        templateUrl: "views/dashboard/home.html",
+        controller: "DashboardController",
+        controllerAs: "dash"
+      })
 
-    $httpProvider.interceptors.push('authInterceptor');
-
+    $httpProvider.interceptors.push("authInterceptor");
   }
-
 
   /**
    * You can intercept any request or response inside authInterceptor
    * or handle what should happend on 40x, 50x errors
-   * 
+   *
    */
-  angular
-    .module('boilerplate')
-    .factory('authInterceptor', authInterceptor);
+  angular.module("boilerplate").factory("authInterceptor", authInterceptor);
 
-  authInterceptor.$inject = ['$rootScope', '$q', 'LocalStorage', '$location'];
+  authInterceptor.$inject = ["$rootScope", "$q", "LocalStorage", "$location"];
 
   function authInterceptor($rootScope, $q, LocalStorage, $location) {
-
     return {
-
       // intercept every request
-      request: function(config) {
+      request: function (config) {
         config.headers = config.headers || {};
         return config;
       },
 
       // Catch 404 errors
-      responseError: function(response) {
+      responseError: function (response) {
         if (response.status === 404) {
-          $location.path('/');
+          $location.path("/");
           return $q.reject(response);
         } else {
           return $q.reject(response);
@@ -94,22 +92,22 @@
       }
     };
   }
-
-
+  angular.module("boilerplate").config(function ($validatorProvider) {
+    $validatorProvider.setDefaults({
+      errorElement: "span",
+      errorClass: "text-danger"
+    });
+  });
   /**
    * Run block
    */
-  angular
-    .module('boilerplate')
-    .run(run);
+  angular.module("boilerplate").run(run);
 
-  run.$inject = ['$rootScope', '$location'];
+  run.$inject = ["$rootScope", "$location"];
 
   function run($rootScope, $location) {
-
     // put here everything that you need to run on page load
-
+    // $location.state("/signup");
+    $rootScope.loaderrequest = false;
   }
-
-
 })();

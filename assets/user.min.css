@@ -1,0 +1,24 @@
+.back-drop,.loader{position:fixed;z-index:10000}
+@keyframes spinner-border{to{transform:rotate(360deg)}
+}
+.spinner-border{display:inline-block;width:2rem;height:2rem;vertical-align:text-bottom;border:.25em solid currentColor;border-right-color:transparent;border-radius:50%;-webkit-animation:spinner-border .75s linear infinite;animation:spinner-border .75s linear infinite}
+.spinner-border-sm{width:1rem;height:1rem;border-width:.2em}
+.back-drop{width:100%;height:100%;background-color:#f8f4f3;opacity:.4}
+.loader{margin:0 auto;width:250px;display:block;left:0;right:0;-webkit-transform:translate3d(0,-50%,0);-moz-transform:translate3d(0,-50%,0);-o-transform:translate3d(0,-50%,0);-ms-transform:translate3d(0,-50%,0);transform:translate3d(0,-50%,0);text-align:center;top:50%}
+.loader:before{content:"";display:block;padding-top:100%}
+.circular{animation:rotate 2s linear infinite;height:35%;transform-origin:center center;width:100%;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto}
+@media (max-width:600px){.circular{height:50%!important}
+}
+.path{stroke-dasharray:1,200;stroke-dashoffset:0;animation:dash 1.5s ease-in-out infinite,color 2s ease-in-out infinite;stroke-linecap:round;stroke-width:3px}
+@keyframes rotate{100%{transform:rotate(360deg)}
+}
+@keyframes dash{0%{stroke-dasharray:1,200;stroke-dashoffset:0}
+50%{stroke-dasharray:89,200;stroke-dashoffset:-35px}
+100%{stroke-dasharray:89,200;stroke-dashoffset:-124px}
+}
+@keyframes color{0%,100%{stroke:#b01312}
+50%{stroke:#1073ae}
+100%{stroke:#f6871f}
+}
+.cursor-pointer{cursor:pointer}
+.logo-insider{max-width:250px}
